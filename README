@@ -1,0 +1,108 @@
+# Diffusion Face Editing — Baseline (Stage 2)
+
+Baseline implementation for real face editing using Stable Diffusion img2img.
+The goal is to build a simple, reproducible reference system before adding inversion and attention-based improvements.
+
+---
+
+## Setup
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+Login to HuggingFace (required for Stable Diffusion weights):
+
+```bash
+hf auth login
+```
+
+---
+
+## Data
+
+For the baseline we use a small subset of face images.
+
+Place input faces in:
+
+```
+data/faces/
+```
+
+Each image should be a face photo (CelebA subset or any aligned portraits).
+
+---
+
+## Running the baseline
+
+Run the full pipeline:
+
+```bash
+bash scripts/run_baseline.sh
+```
+
+This will:
+
+1. Generate img2img edits (smiling attribute)
+2. Build qualitative grids
+3. Compute CLIP similarity
+4. Run reconstruction sanity check
+
+---
+
+## Outputs
+
+Results are saved in:
+
+```
+results/
+├ edits/          # generated edits
+├ inputs/         # input faces
+├ recon/          # reconstruction sanity outputs
+├ grids/          # visualization grids
+└ metrics_clip.json
+```
+
+Key artifacts:
+
+* `grids/baseline_input_vs_edit.jpg` — main qualitative result
+* `grids/sanity_input_vs_recon.jpg` — reconstruction sanity check
+* `metrics_clip.json` — quantitative metric
+
+---
+
+## Configuration
+
+Main parameters are stored in:
+
+```
+configs/baseline.yaml
+```
+
+Includes:
+
+* prompts
+* edit strength
+* inference steps
+* number of samples
+
+---
+
+## Compute
+
+Baseline was tested on CPU (Stable Diffusion v1.5).
+Inference is slower but reproducible without GPU.
+
+---
+
+## Notes
+
+This repository contains the Stage 2 baseline:
+
+* No inversion
+* No attention control
+* Pure img2img (SDEdit-style)
+
+Planned improvements include DDIM inversion and attention-based editing.

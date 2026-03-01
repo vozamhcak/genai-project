@@ -1,0 +1,10 @@
+model_id: runwayml/stable-diffusion-v1-5
+resolution: 512
+num_images: 20
+num_inference_steps: 30
+guidance_scale: 7.5
+edit_strength: 0.6
+recon_strength: 0.2
+edit_prompt: "a smiling person, portrait, high quality"
+recon_prompt: "a person, portrait, high quality"
+seed: 42
