@@ -52,6 +52,78 @@ This will:
 
 ---
 
+## Prompt 1 Ablation (for deeper analysis)
+
+To move beyond a single baseline point, run Prompt 1 ("smiling person") with a parameter sweep:
+
+```bash
+bash scripts/run_prompt1_ablation.sh
+```
+
+This experiment evaluates multiple `(strength, guidance_scale)` combinations and saves:
+
+```
+results/prompt1_ablation/
+├── s0.30_g5.0/
+│   ├── edit_000.jpg ...
+│   └── metrics.json
+├── ...
+└── summary_prompt1.json
+```
+
+Metrics per run:
+
+* `clip_mean` (edit prompt alignment, higher is better)
+* `lpips_mean` (input-output drift, lower is better)
+* `tradeoff_score = clip_mean - 0.25 * lpips_mean`
+
+Use `summary_prompt1.json` to report the best trade-off setting.
+
+---
+
+## Experimental Progress Snapshot (Mar 2026)
+
+We completed the first full ablation cycle for Prompt 1 (smile edit) and moved from a single baseline point to a reproducible parameter study.
+
+Work volume:
+
+* 12 parameter configurations (`4 strengths x 3 guidance_scales`)
+* 20 real face inputs per configuration
+* 240 generated edited images in this experiment block
+* Per-run JSON logging with prompt alignment + preservation metrics
+
+Key measured ranges from `results/prompt1_ablation/summary_prompt1.json`:
+
+* `clip_mean`: 0.2446 to 0.2880 (higher means better prompt alignment)
+* `lpips_mean`: 0.2025 to 0.4422 (lower means better input preservation)
+* `tradeoff_score`: 0.1705 to 0.1945
+
+Best trade-off run:
+
+* `s0.30_g7.5`
+* `clip_mean = 0.2466`
+* `lpips_mean = 0.2084`
+* `tradeoff_score = 0.1945`
+
+Observed trend:
+
+* Increasing `strength` and `guidance_scale` improves edit strength (`clip_mean` rises)
+* But it increases visual drift from the source (`lpips_mean` rises faster)
+* For this stage, moderate editing (`strength=0.30, guidance=7.5`) gives the best balance
+
+---
+
+## What This Adds Beyond Baseline
+
+Compared to the initial single-setting baseline, we now provide:
+
+* Structured ablation with controlled seeds and fixed dataset
+* Multi-objective evaluation (alignment + preservation, not only one metric)
+* Automatic ranking of configurations by a defined trade-off criterion
+* Quantitative evidence for the editability-preservation tension discussed in the proposal
+
+---
+
 ## Outputs
 
 Results are saved in:
