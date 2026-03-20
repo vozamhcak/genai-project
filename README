@@ -81,6 +81,36 @@ Use `summary_prompt1.json` to report the best trade-off setting.
 
 ---
 
+## Noise Edit Full (latent noise branch)
+
+To run the new branch where noise is explicitly added in latent space before denoising:
+
+```bash
+bash scripts/run_noise_edit_full.sh
+```
+
+This creates:
+
+```
+results/noise_edit_full/
+├── smile/
+├── glasses/
+├── bangs/
+├── all_runs.csv
+├── best_per_prompt.csv
+├── clip_vs_lpips.png
+├── overall_summary_table.json
+└── for_report/
+```
+
+`for_report/` includes:
+
+* `best_per_prompt.csv`
+* `clip_vs_lpips.png`
+* `best_overview.png`
+
+---
+
 ## Experimental Progress Snapshot (Mar 2026)
 
 We completed the first full ablation cycle for Prompt 1 (smile edit) and moved from a single baseline point to a reproducible parameter study.

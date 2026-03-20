@@ -1,0 +1,19 @@
+model_id: runwayml/stable-diffusion-v1-5
+resolution: 512
+num_images: 20
+num_inference_steps: 30
+guidance_scale: 7.5
+seed: 42
+
+strengths:
+  - 0.3
+  - 0.5
+  - 0.7
+
+prompts:
+  - name: smile
+    edit_prompt: "a smiling person, portrait, high quality"
+  - name: glasses
+    edit_prompt: "a person wearing eyeglasses, portrait, high quality"
+  - name: bangs
+    edit_prompt: "a person with bangs, portrait, high quality"
